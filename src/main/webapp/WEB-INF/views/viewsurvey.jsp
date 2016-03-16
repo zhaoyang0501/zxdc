@@ -14,7 +14,7 @@
     <meta name="author" content="Suono Libero ( @rivathemes.com )">
     <link rel="shortcut icon" href="favicon.ico">
 
-    <title></title>
+    <title>Envor HTML5/CSS3 Template</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -52,6 +52,7 @@
     <!--[if lt IE 7]>
     <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
+   
    	<%@include file="./header.jsp" %>
    
    <div class="envor-content" style="padding-top: 0px;">
@@ -60,7 +61,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="envor-desktop-breadscrubs-inner">
-                <a href="index.html">首页</a><i class="fa fa-angle-double-right"></i>个人中心
+                <a href="index.html">首页</a><i class="fa fa-angle-double-right"></i>调查
               </div>
             </div>
           </div>
@@ -69,40 +70,71 @@
       
       <section class="envor-section">
         <div class="container">
+         <c:if test="${tip!=null }">
+      <div class="envor-msg envor-msg-info">
+                <header>
+                	  提示!
+                  <i class="fa fa-times"></i>
+                </header>
+                <p>${tip }</p>
+          </div>
+      </c:if>
           <div class="row" style="margin-bottom: 30px">
-           <div class="col-lg-3 col-md-3">
-              	<nav class="envor-side-navi">
-                <ul>
-                  <li  class="active"><i class="glyphicon glyphicon-arrow-right"></i> <a href="center">个人信息</a></li>
-                  <li ><i class="glyphicon glyphicon-arrow-right"></i> <a href="myorder">我的调查</a></li>
-                </ul>
-              </nav>
-            </div>	
-            
-          	<div class="col-lg-9 col-md-9">
-              <h3 style="margin-top: 0px;">我的档案</h3>
-              <form class="envor-f1" action="docreateplan" method="post">
-               <p><label for="drop-email">姓名:</label>${sessionScope.user.name }</p>
-                <p><label for="drop-name">用户名:</label>${sessionScope.user.username } </p>
-                 <p><label for="drop-name">电子邮箱:</label>${sessionScope.user.email} </p>
-                     <p><label for="drop-name">电话:</label>${sessionScope.user.tel} </p>
-                    <p><label for="drop-name">毕业学校:</label>${sessionScope.user.grade} </p>
-                      <p><label for="drop-name">住址:</label>${sessionScope.user.address} </p>
-                        <p><label for="drop-name">注册日期:</label><fmt:formatDate value="${sessionScope.user.createDate}" pattern="yyyy/MM/dd" /> </p>
-                </form>
-            <!--
+          <div class='col-lg-12'>
+         	<article class="envor-post">
+             
+                 
+                <header>
+                  <h3 style="margin-top: 0px;"><i class="fa fa-pencil"></i> <span>${survey.name }</span></h3>
+                  <p>${survey.head }</p>
+                </header>
+                <form action="surveysubmit" method="post" class='envor-f1'>
+                 <input type="hidden" name="id"  value="${survey.id }" >
+                <c:forEach items="${survey.questions }" var="bean"  varStatus="status">
+                 <input type="hidden" name="answers[${status.index}].question.id"  value="${bean.id }" >
+                  <input type="hidden" name="answers[${status.index}].survey.id"  value="${survey.id }" >
+                 	<div class="container">
+               			<h4>${status.index+1}.${bean.name }</h4>
+               			<p>
+               			<label class="">
+						  <input type="radio" name="answers[${status.index}].answer"  value="a" >
+						  ${bean.optiona }
+						</label>
+               			
+               			<label class="">
+						  <input type="radio" name="answers[${status.index}].answer" id="optionsRadios1" value="b" >
+						   ${bean.optionb }
+						</label>
+						
+						<label class="">
+						  <input type="radio" name="answers[${status.index}].answer" id="optionsRadios1" value="c" >
+						  ${bean.optionc }
+						</label>
+						
+						<label class="">
+						  <input type="radio" name="answers[${status.index}].answer" id="optionsRadios1" value="d" >
+						  ${bean.optiond }
+						</label>
+						</p>
+               		</div>
+                </c:forEach>
+                     <p><input type="submit" value="提交" class="envor-btn envor-btn-normal envor-btn-primary"></p>
+             
+                 </form>     
+              <!--
 
-            Contact Form end
+              Post end
 
-            //-->
-            </div>
-		  </div>
+              //-->
+              </article>  
+                 		 		
+          </div>
+          	
         </div>
       </section>
     </div>
     
 	<%@include file="./footer.jsp" %>
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -129,6 +161,26 @@
     <script src="js/layerslider/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
     <script src="js/jquery.rivathemes.js"></script>
     <script type="text/javascript">
+    $('document').ready(function() {
+        /*
+
+        Sorting
+
+        */
+        $('#faq-sorting').rivaSorting({
+          showAll : 1
+        });
+        /*
+
+        Footer News Slider
+
+        */
+        $('#footer-news').rivaSlider({
+          visible : 1,
+          selector : 'envor-post-preview'
+        });
+    });
+
       $('document').ready(function() {
           /*
 
@@ -209,7 +261,6 @@
       });
       /*
 
-     
       Windows Phone 8 и Internet Explorer 10
 
       */

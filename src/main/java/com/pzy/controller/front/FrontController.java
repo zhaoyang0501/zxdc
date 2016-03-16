@@ -15,6 +15,8 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pzy.entity.Answer;
+import com.pzy.entity.AnswerDto;
 import com.pzy.entity.Category;
 import com.pzy.entity.Order;
 import com.pzy.entity.Project;
@@ -23,6 +25,7 @@ import com.pzy.service.CategoryService;
 import com.pzy.service.NewsService;
 import com.pzy.service.OrderService;
 import com.pzy.service.ProjectService;
+import com.pzy.service.SurveyService;
 import com.pzy.service.UserService;
 /***
  * 前台，首页各种连接登陆等
@@ -44,6 +47,8 @@ public class FrontController {
 	private OrderService orderService;
 	@Autowired
 	private NewsService newsService;
+	@Autowired
+	private SurveyService surveyService;
 	@InitBinder  
 	protected void initBinder(HttpServletRequest request,   ServletRequestDataBinder binder) throws Exception {   
 	    binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true)); 
@@ -67,8 +72,35 @@ public class FrontController {
 	public String index(Model model) {
 		return "index";
 	}
+	@RequestMapping("survey")
+	public String survey(Model model) {
+		model.addAttribute("surveys",surveyService.findAll());
+		return "survey";
+	}
+	@RequestMapping("surveyview")
+	public String survey(Model model,Long id) {
+		model.addAttribute("survey",surveyService.find(id));
+		return "viewsurvey";
+	}
+	@RequestMapping("surveysubmit")
+	public String surveysubmit(Model model,Long id,AnswerDto dto,HttpSession httpSession) {
+		User user=(User)httpSession.getAttribute("user");
+		if(user==null){
+			model.addAttribute("tip","请登录!");
+    		return "login";
+		}
+		
+		for(Answer answer:dto.getAnswers()){
+			answer.setCreateDate(new Date());
+			answer.setUser(user);
+		}
+		surveyService.save(dto.getAnswers());
+		model.addAttribute("tip","提交成功!");
+		model.addAttribute("survey",surveyService.find(id));
+		return "viewsurvey";
+	}
 	
-
+	
 	/***
 	 * 关于我们
 	 * @return

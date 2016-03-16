@@ -16,7 +16,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.pzy.entity.Answer;
 import com.pzy.entity.Survey;
+import com.pzy.repository.AnswerRepository;
 import com.pzy.repository.SurveyRepository;
 /***
  * 
@@ -27,8 +29,10 @@ import com.pzy.repository.SurveyRepository;
 public class SurveyService {
      @Autowired
      private SurveyRepository surveyRepository;
-
- 	public List<Survey> findTop3() {
+     
+     @Autowired
+     private AnswerRepository answerRepository;
+ 	 public List<Survey> findTop3() {
  		return surveyRepository.findAll(
  				new PageRequest(0, 15, new Sort(Direction.DESC, "createDate")))
  				.getContent();
@@ -74,5 +78,8 @@ public class SurveyService {
 		}
 		public void save(Survey survey){
 			surveyRepository.save(survey);
+		}
+		public void save(List<Answer> answers){
+			answerRepository.save(answers);
 		}
 }

@@ -92,5 +92,10 @@ public class Survey {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
+	 public void removeQuestion(Question question) {  
+	        this.questions.remove(question);  
+	 } 
+	 public void addQuestion(Question question) {  
+	        this.questions.add(question);  
+	 } 
 }

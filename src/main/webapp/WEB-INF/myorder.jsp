@@ -44,6 +44,11 @@
     <![endif]-->
 
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <style type="text/css">
+    #fuckyou{
+    	margin-top: 0px!important; 
+    }
+    </style>
   </head>
 
     <body>
@@ -69,32 +74,61 @@
       
       <section class="envor-section">
         <div class="container">
+         <c:if test="${tip!=null }">
+      <div class="envor-msg envor-msg-info">
+                <header>
+                	  提示!
+                  <i class="fa fa-times"></i>
+                </header>
+                <p>${tip }</p>
+          </div>
+      </c:if>
           <div class="row" style="margin-bottom: 30px">
            <div class="col-lg-3 col-md-3">
               	<nav class="envor-side-navi">
                 <ul>
-                  <li  class="active"><i class="glyphicon glyphicon-arrow-right"></i> <a href="center">个人信息</a></li>
-                  <li ><i class="glyphicon glyphicon-arrow-right"></i> <a href="myorder">我的调查</a></li>
+                   <li ><i class="glyphicon glyphicon-arrow-right"></i> <a href="center">个人信息</a></li>
+                  <li  class="active" ><i class="glyphicon glyphicon-arrow-right"></i> <a href="myorder">我的订单</a></li>
+                
                 </ul>
               </nav>
             </div>	
             
-          	<div class="col-lg-9 col-md-9">
-              <h3 style="margin-top: 0px;">我的档案</h3>
-              <form class="envor-f1" action="docreateplan" method="post">
-               <p><label for="drop-email">姓名:</label>${sessionScope.user.name }</p>
-                <p><label for="drop-name">用户名:</label>${sessionScope.user.username } </p>
-                 <p><label for="drop-name">电子邮箱:</label>${sessionScope.user.email} </p>
-                     <p><label for="drop-name">电话:</label>${sessionScope.user.tel} </p>
-                    <p><label for="drop-name">毕业学校:</label>${sessionScope.user.grade} </p>
-                      <p><label for="drop-name">住址:</label>${sessionScope.user.address} </p>
-                        <p><label for="drop-name">注册日期:</label><fmt:formatDate value="${sessionScope.user.createDate}" pattern="yyyy/MM/dd" /> </p>
-                </form>
-            <!--
-
-            Contact Form end
-
-            //-->
+          <div class="col-lg-9 col-md-9">
+			<table class="table table-bordered">
+			<thead>
+				<tr>
+					   <th>服务名称</th>
+					   <th>订单时间</th>
+						<th>单价</th>
+						<th>总价</th>
+						<th>地址</th>
+						<th>状态</th>
+						<th></th>
+				 </tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${orders }" var="bean">
+				<tr>
+						<th>${bean.project.name }</th>
+						<th>${bean.orderDate }</th>
+						<th>${bean.price }</th>
+						<th>${bean.toalprice }</th>
+						<th>${bean.addr }</th>
+						<th>
+						<c:if test="${bean.state=='已取消' }">
+						<span class="label label-danger">${bean.state }</span>
+						</c:if>
+						<c:if test="${bean.state!='已取消' }">
+							<span class="label label-success">${bean.state }</span>
+						</c:if>
+						</th>
+							<th><a href="deleteorder?id=${bean.id }">取消订单</a></th>
+				 </tr>
+			</c:forEach>
+				
+			</tbody>
+			</table>
             </div>
 		  </div>
         </div>

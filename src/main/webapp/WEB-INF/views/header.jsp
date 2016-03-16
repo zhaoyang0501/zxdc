@@ -88,7 +88,7 @@
                       <a href="news">新闻</a>
                     </li>
                     <li>
-                      <a href="project">调查</a>
+                      <a href="survey">调查</a>
                     </li>
                       <li>
                       <a href="center">个人中心</a>

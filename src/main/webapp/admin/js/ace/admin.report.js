@@ -1,4 +1,4 @@
-jQuery.paper = {
+jQuery.report = {
 		userDataTable:null,
 		initSearchDataTable : function() {
 			if (this.userDataTable == null) {
@@ -26,7 +26,7 @@ jQuery.paper = {
 					"sServerMethod" : "POST",
 					"bProcessing" : true,
 					"bSort" : false,
-					"sAjaxSource" : $.ace.getContextPath() + "/admin/paper/list",
+					"sAjaxSource" : $.ace.getContextPath() + "/admin/report/list",
 					"fnDrawCallback" : function(oSettings) {
 						$('[rel="popover"],[data-rel="popover"]').popover();
 					},
@@ -62,16 +62,38 @@ jQuery.paper = {
 						"mDataProp" : "optiond"
 					},{
 						"mDataProp" : "remark"
-					},{
-						"mDataProp" : "createDate"
-					},{
-						"mDataProp" : ""
 					}],
 					"aoColumnDefs" : [
 						{
-							'aTargets' : [8],
+							'aTargets' : [2],
 							'fnRender' : function(oObj, sVal) {
-								return " <button class=\"btn2 btn-info\" onclick=\"$.paper.deletepaper("+oObj.aData.id+")\"><i class=\"icon-trash\"></i> 移除该题目</button>";
+								return " <div class='progress progress-striped active'>"  +
+								"  <div class='bar' style='width: 25%'></div>"  +
+								"</div>25%";
+							}
+						},
+						{
+							'aTargets' : [3],
+							'fnRender' : function(oObj, sVal) {
+								return " <div class='progress progress-striped active'>"  +
+										"  <div class='bar' style='width: 25%'></div>"  +
+										"</div>25%";
+							}
+						},
+						{
+							'aTargets' : [4],
+							'fnRender' : function(oObj, sVal) {
+								return " <div class='progress progress-striped active'>"  +
+								"  <div class='bar' style='width: 25%'></div>"  +
+								"</div>25%";
+							}
+						},
+						{
+							'aTargets' : [5],
+							'fnRender' : function(oObj, sVal) {
+								return " <div class='progress progress-striped active'>"  +
+								"  <div class='bar' style='width: 25%'></div>"  +
+								"</div>25%";
 							}
 						},
 					 {
@@ -88,17 +110,17 @@ jQuery.paper = {
 			}
 
 		},
-		deletepaper :function(id){
+		deletereport :function(id){
 			bootbox.confirm( "是否确认删除？", function (result) {
 	            if(result){
 	            	$.ajax({
 	        			type : "get",
-	        			url : $.ace.getContextPath() + "/admin/paper/delete/"+id+"/"+$("#_name").val(),
+	        			url : $.ace.getContextPath() + "/admin/report/delete/"+id+"/"+$("#_name").val(),
 	        			dataType : "json",
 	        			success : function(json) {
 	        				if(json.state=='success'){
 	        					noty({"text":""+ json.msg +"","layout":"top","type":"success","timeout":"2000"});
-	        					$.paper.initSearchDataTable();
+	        					$.report.initSearchDataTable();
 	        				}else{
 	        					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
 	        				}
@@ -117,7 +139,7 @@ jQuery.paper = {
 			$("#id").val(id);
 			$.ajax({
     			type : "get",
-    			url : $.ace.getContextPath() + "/admin/paper/get/"+id,
+    			url : $.ace.getContextPath() + "/admin/report/get/"+id,
     			dataType : "json",
     			success : function(json) {
     				if(json.state=='success'){
@@ -135,14 +157,14 @@ jQuery.paper = {
 			$("#id").val($("#_name").val());
 			$.ajax({
     			type : "post",
-    			url : $.ace.getContextPath() + "/admin/paper/save",
+    			url : $.ace.getContextPath() + "/admin/report/save",
     			data:$("form").serialize(),
     			dataType : "json",
     			success : function(json) {
     				if(json.state=='success'){
     					$("#_modal").modal('hide');
     					noty({"text":""+ json.msg +"","layout":"top","type":"success","timeout":"2000"});
-    					$.paper.initSearchDataTable();
+    					$.report.initSearchDataTable();
     				}else{
     					noty({"text":""+ json.msg +"","layout":"top","type":"warning"});
     				}

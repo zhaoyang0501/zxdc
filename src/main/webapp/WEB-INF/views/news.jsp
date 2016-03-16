@@ -80,7 +80,7 @@
                   
                 </header>
                 <p>${bean.context }</p>
-                <p><a href="viewnews?news.id=${bean.id }" class="envor-btn envor-btn-small envor-btn-secondary-border">查看详情 <i class="fa fa-arrow-circle-right"></i></a></p>
+                <p><a href="viewnews?id=${bean.id }" class="envor-btn envor-btn-small envor-btn-secondary-border">查看详情 <i class="fa fa-arrow-circle-right"></i></a></p>
                 <div class="date">
                   <span class="day"><fmt:formatDate value="${bean.createDate}" pattern="dd"/></span>
                   <span class="month"><fmt:formatDate value="${bean.createDate}" pattern="MM yyyy"/></span>
