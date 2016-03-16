@@ -31,6 +31,9 @@
 					<li><a href="${pageContext.request.contextPath}/admin/order/index"><i class="icon-pencil"></i>订单管理</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/news/create"><i class="icon-pencil"></i>新闻发布</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/news/index"><i class="icon-pencil"></i>新闻管理</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/question/index"><i class="icon-pencil"></i>题库管理</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/survey/index"><i class="icon-pencil"></i>调查项目管理</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/survey/index"><i class="icon-pencil"></i>调查问卷生成</a></li>
 					
 					
 				<!-- 
