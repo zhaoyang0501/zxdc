@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 /***
- * 对应数据库 公告
+ * 新闻
  * @author Administrator
  *
  */

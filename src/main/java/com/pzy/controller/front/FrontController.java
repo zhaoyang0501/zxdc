@@ -2,7 +2,6 @@ package com.pzy.controller.front;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,14 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pzy.entity.Answer;
 import com.pzy.entity.AnswerDto;
-import com.pzy.entity.Category;
-import com.pzy.entity.Order;
-import com.pzy.entity.Project;
 import com.pzy.entity.User;
 import com.pzy.service.CategoryService;
 import com.pzy.service.NewsService;
-import com.pzy.service.OrderService;
-import com.pzy.service.ProjectService;
 import com.pzy.service.SurveyService;
 import com.pzy.service.UserService;
 /***
@@ -41,10 +35,7 @@ public class FrontController {
 	
 	@Autowired
 	private CategoryService categoryService;
-	@Autowired
-	private ProjectService projectService;
-	@Autowired
-	private OrderService orderService;
+	
 	@Autowired
 	private NewsService newsService;
 	@Autowired
@@ -117,33 +108,8 @@ public class FrontController {
 	public String center() {
 		return "center";
 	}
-	/***
-	 * 我的订单
-	 * @return
-	 */
-	@RequestMapping("myorder")
-	public String myorder(Model model,HttpSession httpSession) {
-		User user=(User)httpSession.getAttribute("user");
-		model.addAttribute("orders",orderService.findByUser(user));
-		return "myorder";
-	}
-	/***
-	 * 取消订单
-	 * @param id
-	 * @param model
-	 * @param httpSession
-	 * @return
-	 */
-	@RequestMapping("deleteorder")
-	public String deleteorder( Long id,Model model,HttpSession httpSession) {
-		Order order=orderService.find(id);
-		order.setState("已取消");
-		orderService.save(order);
-		User user=(User)httpSession.getAttribute("user");
-		model.addAttribute("orders",orderService.findByUser(user));
-		model.addAttribute("tip", "订单取消成功！");
-		return "myorder";
-	}
+	
+	
 	
 	
 	/***
@@ -210,63 +176,8 @@ public class FrontController {
     	}
 	}
 	
-	/***
-	 *家务帮列表
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("project")
-	public String project(Model model,String key,Long cid,HttpSession httpSession) {
-		model.addAttribute("cagegorys", categoryService.findAll());
-		User user=(User)httpSession.getAttribute("user");
-		Category category=null;
-		if(cid!=null)
-			category=categoryService.find(cid);
-		List<Project> list= projectService.findBycategory(cid,key);
-		model.addAttribute("projects",list);
-		model.addAttribute("likes",projectService.findLikes(user));
-		model.addAttribute("category",category);
-		return "project";
-	}
-	/**
-	 * 查看产品列表
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("viewproject")
-	public String viewproject(Long id,Model model) {
-		model.addAttribute("bean",projectService.find(id));
-		return "viewproject";
-	}
-	/***
-	 * 提交订单
-	 * @param model
-	 * @param pid
-	 * @param order
-	 * @param httpSession
-	 * @return
-	 */
-	@RequestMapping("submitorder")
-	public String submitorder(Model model,Long pid,Order order,HttpSession httpSession) {
-		User user=	(User)httpSession.getAttribute("user");
-		if(user==null){
-			model.addAttribute("tip","请登录!");
-    		return "login";
-		}
-		Project bean=projectService.find(pid);
-		order.setCreateDate(new Date());
-		order.setState("待审核");
-		order.setProject(bean);
-		order.setUser(user);
-		
-		order.setPrice(bean.getPrice());
-		order.setToalprice(bean.getPrice());
-		orderService.save(order);
-		model.addAttribute("bean",bean);
-		model.addAttribute("tip","订单提交成功等待处理");
-		return "viewproject";
-	}
+	
+	
 	
 }
 
