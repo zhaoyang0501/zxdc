@@ -51,9 +51,9 @@ public class PaperController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> save(Long qid,Long id) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		Survey survey=surveyService.find(id);
 		survey.addQuestion(questionService.find(qid));
-		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			surveyService.save(survey);
 		} catch (Exception e) {

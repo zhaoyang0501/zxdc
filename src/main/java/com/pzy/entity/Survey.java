@@ -39,7 +39,7 @@ public class Survey {
 	
 	private  Date createDate;
 	 
-	 @OneToMany(fetch = FetchType.LAZY) 
+	 @OneToMany(fetch = FetchType.EAGER) 
 	 @JoinTable(name = "t_survey_question",//中间表名 
 	 joinColumns = { @JoinColumn(name = "s_id") }, 
 	 inverseJoinColumns = { @JoinColumn(name = "q_id") })  
@@ -96,6 +96,6 @@ public class Survey {
 	        this.questions.remove(question);  
 	 } 
 	 public void addQuestion(Question question) {  
-	        this.questions.add(question);  
+	        this.questions.add(question);
 	 } 
 }

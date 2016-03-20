@@ -74,7 +74,6 @@
               	<nav class="envor-side-navi">
                 <ul>
                   <li  class="active"><i class="glyphicon glyphicon-arrow-right"></i> <a href="center">个人信息</a></li>
-                  <li ><i class="glyphicon glyphicon-arrow-right"></i> <a href="myorder">我的调查</a></li>
                 </ul>
               </nav>
             </div>	
